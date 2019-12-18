@@ -1,14 +1,19 @@
 import React from "react";
 import fetch from "isomorphic-unfetch";
 import FilesPage from "../../components/FilesPage";
+import FileDetail from "../../components/FileDetail";
 
-const FileDetail = ({ fileId }) => {
-  return <FilesPage>detail page for file {fileId} </FilesPage>;
+const FileDetailPage = ({ fileId }) => {
+  return (
+    <FilesPage>
+      <FileDetail fileId={fileId} />
+    </FilesPage>
+  );
 };
 
-FileDetail.getInitialProps = async ({ req, query }) => {
+FileDetailPage.getInitialProps = async ({ req, query }) => {
   const fileId = query.id;
   return { fileId };
 };
 
-export default FileDetail;
+export default FileDetailPage;
