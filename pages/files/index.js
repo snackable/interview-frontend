@@ -34,6 +34,7 @@ const FileListPage = ({ files, pageSize }) => {
   // If current pages files are not loaded we can have the "loading" state
   const loading = useMemo(() => !loadedFiles.hasOwnProperty(page), [loadedFiles, page]);
 
+  // Filter the files to display
   const filesToDisplay = useMemo(() => pageFiles.filter(file => filterStatus === '' || file.processingStatus === filterStatus), [pageFiles, filterStatus]);
 
   return (
@@ -51,7 +52,7 @@ const FileListPage = ({ files, pageSize }) => {
 
 FileListPage.getInitialProps = async () => {
   const pageSize = 5;
-  const files = await loadFiles(0, 5);
+  const files = await loadFiles(0, pageSize);
 
   return { files, pageSize };
 };
