@@ -1,20 +1,52 @@
-import React from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import fetch from "isomorphic-unfetch";
-import FileList from "../../components/FileList";
 import FilesPage from "../../components/FilesPage";
+import FileList from "../../components/FileList";
+import FilePaginaton from "../../components/FilePagination";
+import Loading from "../../components/Loading";
+import { loadFiles } from '../../api'
 
-const FileListPage = ({ files }) => {
+const FileListPage = ({ files, pageSize }) => {
+  const [filesToDisplay, setFilesToDisplay] = useState(files);
+  const [loadedFiles, setLoadedFiles] = useState({0: files});
+  const [page, setPage] = useState(0);
+
+  useEffect(() => {
+    if (!loadedFiles.hasOwnProperty(page)) {
+      (async () => {
+        const files = await loadFiles(pageSize * page, pageSize);
+
+        setLoadedFiles({
+          ...loadedFiles,
+          [page]: files
+        });
+      })();
+    }
+  }, [page]);
+
+  useEffect(() => {
+    setFilesToDisplay(loadedFiles[page] || []);
+  }, [loadedFiles, page]);
+
+  const loading = useMemo(() => !loadedFiles.hasOwnProperty(page), [loadedFiles, page]);
+
   return (
     <FilesPage>
-      <FileList files={files} />
+      {loading ?
+        <Loading />
+      :
+        <FileList files={filesToDisplay} />
+      }
+      <FilePaginaton page={page} setPage={setPage} hasNext={filesToDisplay.length === pageSize} />
     </FilesPage>
   );
 };
 
 FileListPage.getInitialProps = async () => {
-  const resp = await fetch("http://interview-api.snackable.ai/api/file/all");
-  const json = await resp.json();
-  return { files: json };
+  const pageSize = 5;
+  const files = await loadFiles(0, 5);
+
+  return { files, pageSize };
 };
 
 export default FileListPage;
