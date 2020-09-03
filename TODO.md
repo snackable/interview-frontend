@@ -1,2 +1,0 @@
-- Add eslint and editorconfig to prevent stupid mistakes
-- Proper design for Pagination and Loading components
