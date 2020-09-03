@@ -1,16 +1,18 @@
 import React, { useState, useEffect, useMemo } from "react";
-import fetch from "isomorphic-unfetch";
 import FilesPage from "../../components/FilesPage";
 import FileList from "../../components/FileList";
 import FilePaginaton from "../../components/FilePagination";
+import FileFilter from "../../components/FileFilter";
 import Loading from "../../components/Loading";
 import { loadFiles } from '../../api'
 
 const FileListPage = ({ files, pageSize }) => {
-  const [filesToDisplay, setFilesToDisplay] = useState(files);
+  const [pageFiles, setPageFiles] = useState(files);
   const [loadedFiles, setLoadedFiles] = useState({0: files});
   const [page, setPage] = useState(0);
+  const [filterStatus, setFilterStatus] = useState('');
 
+  // If the page changes load files if necessary
   useEffect(() => {
     if (!loadedFiles.hasOwnProperty(page)) {
       (async () => {
@@ -24,20 +26,25 @@ const FileListPage = ({ files, pageSize }) => {
     }
   }, [page]);
 
+  // If there is a new page or loaded files set them as the ones to display
   useEffect(() => {
-    setFilesToDisplay(loadedFiles[page] || []);
+    setPageFiles(loadedFiles[page] || []);
   }, [loadedFiles, page]);
 
+  // If current pages files are not loaded we can have the "loading" state
   const loading = useMemo(() => !loadedFiles.hasOwnProperty(page), [loadedFiles, page]);
+
+  const filesToDisplay = useMemo(() => pageFiles.filter(file => filterStatus === '' || file.processingStatus === filterStatus), [pageFiles, filterStatus]);
 
   return (
     <FilesPage>
+      <FileFilter filterStatus={filterStatus} setFilterStatus={setFilterStatus} />
       {loading ?
         <Loading />
       :
         <FileList files={filesToDisplay} />
       }
-      <FilePaginaton page={page} setPage={setPage} hasNext={filesToDisplay.length === pageSize} />
+      <FilePaginaton page={page} setPage={setPage} hasNext={pageFiles.length === pageSize} />
     </FilesPage>
   );
 };
