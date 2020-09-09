@@ -1,3 +1,5 @@
+import fetch from "isomorphic-unfetch";
+
 const API_URL = 'http://interview-api.snackable.ai/api';
 
 const load = async (url) => {
