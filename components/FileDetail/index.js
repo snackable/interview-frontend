@@ -8,7 +8,7 @@ export default ({ file, segments }) => {
         <table className='border-collapse border-2 border-gray-500'>
             <THead />
             <tbody>
-                <tr className='hover:bg-gray-100 cursor-pointer'>
+                <tr className='row'>
                     <BodyCell>{file.fileId}</BodyCell>
                     <BodyCell>{file.fileName}</BodyCell>
                     <BodyCell>{file.seriesTitle}</BodyCell>

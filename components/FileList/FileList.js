@@ -19,7 +19,7 @@ export default ({ files }) => {
       {files.map(file => {
         return (
           <Link key={file.fileId} href={`/files/${file.fileId}`}>
-            <tr className="hover:bg-gray-100 cursor-pointer">
+            <tr className="row">
               <td className="border border-gray-400 px-4 py-2">
                 {file.fileId}
               </td>
