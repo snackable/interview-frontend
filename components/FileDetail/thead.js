@@ -1,5 +1,5 @@
 const HeaderCell = ({ children }) => (
-    <th className='border border-gray-400 px-4 py-2 text-gray-800'>{children}</th>
+    <th>{children}</th>
 );
 
 const headerTitles = ['File ID', 'File name', 'Series title', 'File'];

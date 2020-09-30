@@ -1,11 +1,11 @@
 import { THead } from './thead';
 import "./index.scss"
 
-const BodyCell = ({ children }) => <td className='border border-gray-400 px-4 py-2'>{children}</td>;
+const BodyCell = ({ children }) => <td>{children}</td>;
 
 export default ({ file, segments }) => {
     return (
-        <table className='border-collapse border-2 border-gray-500'>
+        <table >
             <THead />
             <tbody>
                 <tr className='row'>

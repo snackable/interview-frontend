@@ -20,10 +20,10 @@ export default ({ files }) => {
         return (
           <Link key={file.fileId} href={`/files/${file.fileId}`}>
             <tr className="row">
-              <td className="border border-gray-400 px-4 py-2">
+              <td>
                 {file.fileId}
               </td>
-              <td className="border border-gray-400 px-4 py-2">
+              <td>
                 {file.processingStatus}
               </td>
             </tr>
