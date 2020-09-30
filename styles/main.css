@@ -12,10 +12,9 @@
 
 body,
 #__next {
-  display: flex;
-  flex-direction: row;
-  justify-content: stretch;
-  align-items: stretch;
+  display: grid;
+  justify-content: space-around;
+  align-items: center;
 }
 #__next {
   flex: 1 1 auto;
