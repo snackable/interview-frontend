@@ -2,7 +2,6 @@ import React from "react";
 import Link from "next/link";
 
 import "./Pagination.css";
-import styles from "./Pagination.module.css";
 
 const PaginationLink = ({ disabled = false, children, href }) => {
   if (disabled) {
