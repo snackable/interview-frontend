@@ -1,19 +1,33 @@
 import React from "react";
 import fetch from "isomorphic-unfetch";
 import FilesPage from "../../components/FilesPage";
-import FileDetail from "../../components/FileDetail";
+import FileDetails from "../../components/FileDetails";
 
-const FileDetailPage = ({ fileId }) => {
+const FileDetailPage = ({ details, segments }) => {
   return (
     <FilesPage>
-      <FileDetail fileId={fileId} />
+      <FileDetails details={details} segments={segments} />
     </FilesPage>
   );
 };
 
-FileDetailPage.getInitialProps = async ({ req, query }) => {
+FileDetailPage.getInitialProps = async ({ query }) => {
   const fileId = query.id;
-  return { fileId };
+  const detailsRequest = fetch(
+    `http://interview-api.snackable.ai/api/file/details/${fileId}`
+  );
+  const segmentsRequest = fetch(
+    `http://interview-api.snackable.ai/api/file/segments/${fileId}`
+  );
+
+  const [details, segments] = await Promise.all([
+    detailsRequest,
+    segmentsRequest,
+  ]).then(async ([detailsResponse, segmentsResponse]) => {
+    return [await detailsResponse.json(), await segmentsResponse.json()];
+  });
+
+  return { details, segments };
 };
 
 export default FileDetailPage;
