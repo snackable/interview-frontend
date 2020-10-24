@@ -34,10 +34,12 @@ export default ({ details, segments }) => {
   const playerRef = useRef();
 
   useEffect(() => {
-    playerRef.current.addEventListener("timeupdate", timeUpdateListener);
+    if (playerRef.current) {
+      playerRef.current.addEventListener("timeupdate", timeUpdateListener);
 
-    return () =>
-      playerRef.current.removeEventListener("timeupdate", timeUpdateListener);
+      return () =>
+        playerRef.current.removeEventListener("timeupdate", timeUpdateListener);
+    }
   }, [playerRef]);
 
   return (
