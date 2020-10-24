@@ -1,11 +1,11 @@
 import { useContext } from "react";
 
-import { Context, processingStatuses } from "../../utils/StatusesContext";
+import { Context } from "../../utils/StatusesContext";
 
 import ListItem from "./ListItem";
 
 export default ({ files }) => {
-  const { statuses, toggle } = useContext(Context);
+  const { statuses } = useContext(Context);
 
   const visibleFiles = files.filter((file) =>
     statuses.includes(file.processingStatus)
@@ -13,17 +13,6 @@ export default ({ files }) => {
 
   return (
     <section>
-      {processingStatuses.map((status) => (
-        <label className="mr-2 cursor-pointer" key={status}>
-          <input
-            type="checkbox"
-            checked={statuses.includes(status)}
-            onChange={() => toggle(status)}
-            className="mr-1"
-          />
-          {status}
-        </label>
-      ))}
       <table className="border-collapse border-2 border-gray-500">
         <thead>
           <tr>
@@ -36,9 +25,17 @@ export default ({ files }) => {
           </tr>
         </thead>
         <tbody>
-          {visibleFiles.map((file) => (
-            <ListItem key={file.fileId} file={file} />
-          ))}
+          {visibleFiles.length > 0 ? (
+            visibleFiles.map((file) => (
+              <ListItem key={file.fileId} file={file} />
+            ))
+          ) : (
+            <tr>
+              <td colSpan="2">
+                No files found. Adjust the filter or try another page.
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </section>

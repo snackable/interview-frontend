@@ -5,6 +5,8 @@ import FileList from "../../../components/FileList";
 import FilesPage from "../../../components/FilesPage";
 import Pagination from "../../../components/Pagination";
 import redirect from "../../../utils/redirect";
+import StatusesContextProvider from "../../../utils/StatusesContext";
+import Filter from "../../../components/Filter";
 
 const limit = 5;
 
@@ -14,8 +16,11 @@ const FileListPage = ({ files, page }) => {
 
   return (
     <FilesPage>
-      <FileList files={files} />
-      <Pagination page={page} hasNextPage={hasNextPage} />
+      <StatusesContextProvider>
+        <Filter />
+        <FileList files={files} />
+        <Pagination page={page} hasNextPage={hasNextPage} />
+      </StatusesContextProvider>
     </FilesPage>
   );
 };
