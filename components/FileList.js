@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import Pagination from "./Pagination";
+
 export default ({ files }) => (
   <table className="border-collapse border-2 border-gray-500">
     <thead>

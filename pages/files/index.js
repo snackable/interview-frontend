@@ -1,20 +1,11 @@
-import React from "react";
-import fetch from "isomorphic-unfetch";
-import FileList from "../../components/FileList";
-import FilesPage from "../../components/FilesPage";
+import redirect from "../../utils/redirect";
 
-const FileListPage = ({ files }) => {
-  return (
-    <FilesPage>
-      <FileList files={files} />
-    </FilesPage>
-  );
+const FileListPage = () => {
+  return null;
 };
 
-FileListPage.getInitialProps = async () => {
-  const resp = await fetch("http://interview-api.snackable.ai/api/file/all");
-  const json = await resp.json();
-  return { files: json };
+FileListPage.getInitialProps = async ({ res }) => {
+  redirect(res, "/files/page/1");
 };
 
 export default FileListPage;

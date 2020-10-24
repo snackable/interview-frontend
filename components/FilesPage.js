@@ -9,7 +9,7 @@ const FilesPage = ({ children }) => {
         <title>Snackable - File browser</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {children}
+      <div>{children}</div>
     </div>
   );
 };

@@ -1,17 +1,9 @@
-import React from "react";
-import Router from "next/router";
+import redirect from "../utils/redirect";
 
-const Index = () => <div />;
+const Index = () => null;
 
-Index.getInitialProps = async ({ res, req }) => {
-  if (res) {
-    res.writeHead(302, {
-      Location: "/files"
-    });
-    res.end();
-  } else {
-    Router.push("/files");
-  }
+Index.getInitialProps = async ({ res }) => {
+  redirect(res, "/files");
   return {};
 };
 
